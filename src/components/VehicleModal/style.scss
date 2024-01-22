@@ -1,0 +1,19 @@
+.vehicle-modal img {
+  margin-bottom: 1rem;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.vehicles-modal__details div {
+  margin: 0 1rem 1rem;
+}
+
+span {
+  color: rgb(34, 33, 33);
+  font-weight: 600;
+}
+
+.vehicles-modal__details p {
+  font-size: .9rem;
+  letter-spacing: .02rem;
+}

@@ -1,0 +1,37 @@
+.modal {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  justify-content: center;
+  margin: 1rem;
+  min-height: 250px;
+  position: absolute;
+  top: 20%;
+  width: auto;
+  z-index: 2;
+}
+
+.overlay {
+  backdrop-filter: blur(3px);
+  background: rgba(0, 0, 0, .5);
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Media Queries */
+@media only screen and (min-width: 600px) {
+  /* For tablets and larger screens */
+  .modal {
+    margin: 0;
+    width: 450px;
+  }
+}

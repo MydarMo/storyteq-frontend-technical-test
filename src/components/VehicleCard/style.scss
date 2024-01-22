@@ -1,0 +1,125 @@
+// Define a mixin for the staggered animation
+@mixin staggered-animation($delay) {
+  animation: fadeInUp .5s ease-in-out $delay both;
+}
+
+// Keyframe animation for fadeInUp
+@keyframes fadeInUp {
+
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vehicle-list__item {
+  border-bottom: 1.5px solid #ccc;
+  display: flex;
+  overflow: hidden;
+  position: relative; 
+  transition: box-shadow .3s;
+
+  @for $i from 1 through 50 {
+    &:nth-child(#{$i}) {
+      @include staggered-animation(.2s * $i);
+    }
+  }
+}
+
+.vehicle-list__item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .5); 
+}
+
+.vehicle-list__item img {
+  max-width: 40%;
+  object-fit: cover;
+}
+
+.vehicle-list__item__details {
+  display: flex;
+  flex: 1;
+  flex-direction: column; 
+  padding: 10px;
+  padding-left: 20px;
+}
+
+.vehicle-list__details__name {
+  color: rgb(34, 33, 33);
+  font-size: 1.2rem;
+  letter-spacing: .1rem;
+  margin-bottom: .2rem;
+}
+
+.vehicle-list__details__price {
+  font-size: .9rem;
+  font-weight: 550;
+  letter-spacing: .1rem;
+
+}
+
+.vehicle-list__details__description {
+  font-size: .8rem;
+  letter-spacing: .03rem;
+  margin: 1.2rem 0 2rem;
+}
+
+.read-more-btn {
+  bottom: 0;
+  position: absolute;
+  right: 0;
+}
+
+/* Media Queries */
+@media only screen and (min-width: 600px) {
+  /* For tablets and larger screens */
+  .vehicle-list__item {
+    border: 0;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    width: 50%;
+
+  }
+
+  .vehicle-list__item img {
+    max-width: 100%;
+    object-fit: cover;
+  }
+
+  .vehicle-list__details__name {
+    margin: 2rem 0;
+  }
+
+  .vehicle-list__details__name span {
+    border-bottom: 2px solid black;
+    border-top: 2px solid black;
+    padding: 3px;
+  }
+
+  .vehicle-list__details__price,
+  .vehicle-list__details__description {
+    font-size: .8rem;
+    font-weight: 500;
+    margin: 0 0 .6rem;
+  }
+
+  .vehicle-list__details__description {
+    margin-bottom: 2rem;
+  }
+}
+
+@media only screen and (min-width: 1100px) {
+  /* For desktop screens */
+  .vehicle-list__item {
+    width: 25%;
+  }
+
+  .vehicle-list__details__name {
+    margin: 1.7rem 0;
+  }
+}

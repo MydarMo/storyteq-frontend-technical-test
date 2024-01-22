@@ -1,40 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setVehicle } from '../../redux/actions';
+import VehicleDetailsModal from '../VehicleModal';
+import VehicleCard from '../VehicleCard';
 import useData from './useData';
 import './style.scss';
 
 export default function VehicleList() {
   // eslint-disable-next-line no-unused-vars
-  const [loading, error, vehicles] = useData();
+  useData();
+  const dispatch = useDispatch();
+  const reduxState = useSelector((state) => state);
+  const { vehicles, loading, error } = reduxState;
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleReadMore = (vehicle) => {
+    dispatch(setVehicle(vehicle));
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    dispatch(setVehicle({}));
+  };
 
   if (loading) {
     return <div data-testid="loading">Loading</div>;
   }
 
   if (error) {
-    return <div data-testid="error">{ error }</div>;
+    return <div data-testid="error">{error}</div>;
   }
 
   return (
-    <div data-testid="results">
-      <p>List of vehicles will be displayed here</p>
-      <p>
-        Visit
-        <a href="/api/vehicles.json" target="_blank"> /api/vehicles.json</a>
-        {' '}
-        (main endpoint)
-      </p>
-      <p>
-        Visit
-        <a href="/api/vehicle_fpace.json" target="_blank">/api/vehicle_fpace.json</a>
-        {' '}
-        (detail endpoint - apiUrl)
-      </p>
-      <p>
-        Visit
-        <a href="/api/vehicle_xf.json" target="_blank">/api/vehicle_xf.json</a>
-        {' '}
-        (vehicle without any price)
-      </p>
-    </div>
+    <>
+      <ul
+        aria-label="Vehicles List"
+        data-testid="results"
+        className="vehicle-list"
+      >
+        {vehicles.map((vehicle, index) => (
+          <VehicleCard
+            key={vehicle.id}
+            index={index}
+            vehicle={vehicle}
+            handleReadMore={handleReadMore}
+          />
+        ))}
+      </ul>
+      <VehicleDetailsModal
+        showModal={showModal}
+        handleCloseModal={handleCloseModal}
+      />
+    </>
   );
 }
